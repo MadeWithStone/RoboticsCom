@@ -35,6 +35,7 @@ public class RobotMap {
   public static int leftSlavePort = 2;
   public static int rightMasterPort = 3;
   public static int rightSlavePort = 4;
+  public static int motorSwitch = 7;
 
   //USB
   public static int joystickPort = 0;

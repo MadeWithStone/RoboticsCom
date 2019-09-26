@@ -7,10 +7,19 @@
 
 package frc.robot.commands;
 
+import java.io.Console;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import edu.wpi.first.wpilibj.Counter;
 
 public class DriveManuallyCommand extends Command {
+  Counter counter = new Counter(Robot.m_oi.limitSwitch);
+
+  public boolean isSwitchSet() {
+    return counter.get() > 0;
+  }
+
   public DriveManuallyCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.driveSubsystem);
@@ -24,8 +33,22 @@ public class DriveManuallyCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double move = -Robot.m_oi.stick.getY();
-    double turn = Robot.m_oi.stick.getX();
+    int multiplier = 1;
+    System.out.println("Get: "+Robot.m_oi.limitSwitch.get());
+    
+    if(Robot.m_oi.limitSwitch.get()){
+      if (multiplier == 1){
+        multiplier++;
+      }
+    } else {
+      if (multiplier == 2){
+        multiplier--;
+      } 
+    }
+    double throttle = -(Robot.m_oi.stick.getThrottle() - 1.1);
+    System.out.println("Multipler: "+ multiplier);
+    double move = -Robot.m_oi.stick.getY()*multiplier;
+    double turn = Robot.m_oi.stick.getTwist() * throttle;
     Robot.driveSubsystem.manualDrive(move, turn);
   }
 
