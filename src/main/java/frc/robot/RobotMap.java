@@ -40,5 +40,5 @@ public class RobotMap {
   public static int joystickPort = 0;
 
   //Other Drivetrain Constants
-  public static int f
+  public static int wheelDiameter = 6;
 }
