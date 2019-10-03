@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveManuallyCommand;
+import edu.wpi.first.wpilibj.Servo;
 
 /**
  * Add your docs here.
@@ -30,7 +31,8 @@ public class DriveSubsystem extends Subsystem {
   SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(leftMaster, leftSlave);
   SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(rightMaster, rightSlave);
 
-
+  //Servo Motor object
+  Servo daServa = new Servo(RobotMap.servoPort);
   //instantiate a new DifferentialDrive object
   // assign motor controllers to differential drive
   public DifferentialDrive drive = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
@@ -57,6 +59,16 @@ public class DriveSubsystem extends Subsystem {
     }
 
     drive.arcadeDrive(move, turn);
+  }
+
+  public void turnServo(double angle){
+    double calculatedAngle = (angle + 1)/2;
+    System.out.println(calculatedAngle);
+    daServa.set(calculatedAngle);
+  }
+
+  public void turnServoDegrees(double degrees){
+    
   }
 
   @Override
