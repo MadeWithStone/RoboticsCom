@@ -10,6 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -24,11 +27,13 @@ public class OI {
   public Joystick stick = new Joystick(RobotMap.joystickPort);
   public DigitalInput limitSwitch = new DigitalInput(RobotMap.motorSwitch);
 
+  
+  public Potentiometer pot = new AnalogPotentiometer(RobotMap.potServ, 1, -0.5);
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to
   // commands the same as any other Button.
 
-  //// TRIGGERING COMMANDS WITH BUTTONS
+  //// TRIGGERING COMMANDS WnITH BUTTONS
   // Once you have a button, it's trivial to bind it to a button in one of
   // three ways:
 

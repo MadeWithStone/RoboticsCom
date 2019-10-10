@@ -27,9 +27,11 @@ public class DriveSubsystem extends Subsystem {
   public Spark leftSlave = new Spark(RobotMap.leftSlavePort);
   public Spark rightMaster = new Spark(RobotMap.rightMasterPort);
   public Spark rightSlave = new Spark(RobotMap.rightSlavePort);
+  public Spark rightMiddle = new Spark(RobotMap.rightMiddlePort);
+  public Spark leftMiddle = new Spark(RobotMap.leftMiddlePort);
 
-  SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(leftMaster, leftSlave);
-  SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(rightMaster, rightSlave);
+  SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(leftMaster, leftSlave, leftMiddle);
+  SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(rightMaster, rightSlave, rightMiddle);
 
   //Servo Motor object
   Servo daServa = new Servo(RobotMap.servoPort);
@@ -50,6 +52,7 @@ public class DriveSubsystem extends Subsystem {
     /*if (move > .5) {
       move = .5;
     */
+    System.out.println("Driving: "+move);
 
     if (Math.abs(move) < 0.1){
       move = 0;
@@ -68,7 +71,8 @@ public class DriveSubsystem extends Subsystem {
   }
 
   public void turnServoDegrees(double degrees){
-    
+    System.out.println(degrees);
+    daServa.setAngle(degrees);
   }
 
   @Override

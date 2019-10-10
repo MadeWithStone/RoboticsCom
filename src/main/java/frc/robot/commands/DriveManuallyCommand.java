@@ -11,6 +11,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 public class DriveManuallyCommand extends Command {
   Counter counter = new Counter(Robot.m_oi.limitSwitch);
@@ -33,22 +37,31 @@ public class DriveManuallyCommand extends Command {
   @Override
   protected void execute() {
     int multiplier = 1;
-    System.out.println("Get: "+Robot.m_oi.limitSwitch.get());
     
-    if(Robot.m_oi.limitSwitch.get()){
+    double degrees = Robot.m_oi.pot.get();
+    System.out.println("degrees: "+degrees);
+    
+    if(!Robot.m_oi.limitSwitch.get()){
       if (multiplier == 1){
         multiplier++;
+        Robot.pneumatics.openPiston();
       }
     } else {
       if (multiplier == 2){
         multiplier--;
+        Robot.pneumatics.closePiston();
       } 
     }
     double throttle = -(Robot.m_oi.stick.getThrottle() - 1.1);
-    System.out.println("Multipler: "+ multiplier);
-    double move = -Robot.m_oi.stick.getY()*multiplier;
-    double turn = Robot.m_oi.stick.getTwist() * throttle;
+    //System.out.println("Multipler: "+ multiplier);
+    double y = -Robot.m_oi.stick.getY();
+    double move = 0.5*y*throttle;
+    double turn = 0.5*Robot.m_oi.stick.getTwist()*throttle;
     Robot.driveSubsystem.manualDrive(move, turn);
+    //Robot.driveSubsystem.turnServoDegrees(degrees);;
+
+    
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
