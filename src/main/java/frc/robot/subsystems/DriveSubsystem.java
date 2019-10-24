@@ -52,7 +52,6 @@ public class DriveSubsystem extends Subsystem {
     /*if (move > .5) {
       move = .5;
     */
-    System.out.println("Driving: "+move);
 
     if (Math.abs(move) < 0.1){
       move = 0;

@@ -6,26 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-
-
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.interfaces.Potentiometer;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.AnalogInput;
 
-public class DriveManuallyCommand extends Command {
-  Counter counter = new Counter(Robot.m_oi.limitSwitch);
-
-  public boolean isSwitchSet() {
-    return counter.get() > 0;
-  }
-
-  public DriveManuallyCommand() {
+public class PneumaticsCommand extends Command {
+  public PneumaticsCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.driveSubsystem);
+    requires(Robot.pneumatics);
   }
 
   // Called just before this Command runs the first time
@@ -36,32 +23,15 @@ public class DriveManuallyCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    int multiplier = 1;
-    
-    double degrees = Robot.m_oi.pot.get();
-    System.out.println("degrees: "+degrees*10);
-
-    if(!Robot.m_oi.limitSwitch.get()){
-      if (multiplier == 1){
-        multiplier++;
-        Robot.pneumatics.openPiston();
-      }
-    } else {
-      if (multiplier == 2){
-        multiplier--;
-        Robot.pneumatics.closePiston();
-      } 
+    System.out.println(Robot.m_oi.stick.getRawButton(2));
+    if (Robot.m_oi.stick.getRawButton(1)){
+      System.out.println("This is an Epic Gamer Moment to be Sure");
+      Robot.pneumatics.openPiston();
     }
-    double throttle = -(Robot.m_oi.stick.getThrottle() - 1.1);
-    //System.out.println("Multipler: "+ multiplier);
-    double y = -Robot.m_oi.stick.getY();
-    double move = 0.5*y*throttle;
-    double turn = 0.5*Robot.m_oi.stick.getTwist()*throttle;
-    Robot.driveSubsystem.manualDrive(move, turn);
-    //Robot.driveSubsystem.turnServoDegrees(degrees);;
-
-    
-    
+    else {
+      Robot.pneumatics.closePiston();
+      System.out.println("\tClosing!");
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -79,6 +49,5 @@ public class DriveManuallyCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }
