@@ -33,22 +33,22 @@ public class RobotMap {
 
   //CAN
   public static int leftMasterPort = 2;
-  public static int leftSlavePort = 4;
+  public static int leftSlavePort = 3;
   public static int leftMiddlePort = 8;
   public static int rightMasterPort = 0;
   public static int rightSlavePort = 1;
   public static int rightMiddlePort = 7;
   public static int servoPort = 5;
   public static int motorSwitch = 7;
-  public static int potServ = 3;
+  public static int potServ = 0;
 
   // Compressor
   public static final int COMPRESSOR_CAN_ID = 0;
   public static Compressor compressor = new Compressor(COMPRESSOR_CAN_ID);
 
   // Solenoid
-  public static int solenoid1 = 0;
-  public static int solenoid2 = 1;
+  public static int solenoid1 = 5;
+  public static int solenoid2 = 4;
 
   //USB
   public static int joystickPort = 0;
